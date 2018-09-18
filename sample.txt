@@ -1,0 +1,68 @@
+#include <iostream>
+
+using namespace std;
+
+
+class Node {
+public:
+    int Value;
+    Node *Next;
+};
+
+class LinkedList {
+    public:
+        Node *Root;
+        void AddNode(int x) {
+            if (Root == NULL) {
+                Root = new Node;
+                (*Root).Value = x;
+                Root->Next = NULL;
+            }
+            else {
+                Node *tmp = Root;
+                while (tmp->Next != NULL) tmp = tmp->Next;
+                tmp->Next = new Node;
+                (*tmp->Next).Value = x;
+                tmp->Next->Next = NULL;
+            }
+        }
+        void PrintList() {
+            if (Root != NULL) {
+                Node *tmp = Root;
+                do {
+                    cout << (*tmp).Value << "\t" << tmp << endl;
+                    tmp = tmp->Next;
+                } while (tmp != NULL);
+            }
+            else cout << "List is empty!" << endl;
+        }
+        void Remove(int index) {
+            Node *tmp = Root;
+            Node *tmp1;
+
+            for (int i=1; i<index-1; i++) tmp = tmp->Next;
+            tmp1 = tmp->Next->Next;
+            delete tmp->Next;
+            tmp->Next = tmp1;
+        }
+};
+
+
+int main()
+{
+    LinkedList List;
+    List.Root = NULL;
+    List.AddNode(1);
+    List.AddNode(2);
+    List.AddNode(3);
+    List.AddNode(4);
+    List.AddNode(5);
+    List.AddNode(6);
+    List.PrintList();
+    List.Remove(3);
+    cout << endl;
+    List.PrintList();
+
+
+    return 0;
+}
